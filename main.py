@@ -1,12 +1,16 @@
-from qdrant_client import QdrantClient, models
-from dotenv import load_dotenv
-import os
+from qdrant_client import models
+from src.database import get_client, init_collection
 
-load_dotenv()
 
-client = QdrantClient(
-    url=os.getenv("QDRANT_URL"),
-    api_key=os.getenv("QDRANT_API_KEY"),
-)
+def main():
+    client = get_client()
+    collection = "my_first_collection"
 
-print(client.get_collections())
+    result = init_collection(client, collection, size=384)
+    print(result)
+
+    print(client.get_collections())
+
+
+if __name__ == "__main__":
+    main()
